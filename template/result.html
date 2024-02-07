@@ -1,1 +1,116 @@
-r
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Prediction!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        /* Add your existing styles here */
+
+        /* Styles for the download button */
+        .download-btn {
+            display: block;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Style for the image section */
+        #image-section {
+            margin-top: 20px;
+        }
+
+        /* Style for the prediction table section */
+        #prediction-section {
+            margin-top: 20px;
+        }
+
+        /* Style for the table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #336600;
+        }
+    </style>
+</head>
+<body style="background-color:black">
+    <div class="container">
+        <div class="row">
+
+<!-- Original RGB Image Section -->
+<div class="col-md-6 image-section">
+    <h2 class="text-light">Original RGB Image with Cloud Covers</h2>
+    <img src="{{ url_for('static', filename=original_rgb_image) }}" alt="Original RGB Image with Cloud Covers">
+</div>
+
+<!-- Replaced RGB Image Section -->
+<div class="col-md-6 image-section">
+    <h2 class="text-light">Clouds Image Replaced by Landsat 8,9 Pixels</h2>
+    <img src="{{ url_for('static', filename=replaced_rgb_image) }}" alt="Replaced RGB Image with Clouds Replaced by Landsat 8 Pixels">
+</div>
+
+
+            <!-- Image Section -->
+            <div class="col-md-6" id="image-section">
+                <h2 class="text-light">Clipped Image for Selected Shapefile</h2>
+                
+    <{% for file in static_files %}
+                    {% set filename = file|replace('.shp', '') %}
+                    <img src="{{ url_for('static', filename=filename) }}" alt="Image">
+                {% endfor %}>
+            </div>
+            
+            <!-- Prediction Section -->
+            <div class="col-md-6" id="prediction-section">
+                <h2 class="text-light">Predictions for Selected Shapefile</h2>
+                <table class="table-bordered text-light">
+                    <tr>
+                        <th>Item</th>
+                        <th>Prediction</th>
+                    </tr>
+                    <tr>
+                        <td>{{ prediction.statement2 }}</td>
+                        <td>{{ prediction.2 }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ prediction.statement1 }}</td>
+                        <td>{{ prediction.1 }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ prediction.statement5 }}</td>
+                        <td>{{ prediction.5 }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ prediction.statement4 }}</td>
+                        <td>{{ prediction.4 }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ prediction.statement3 }}</td>
+                        <td>{{ prediction.3 }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Buttons -->
+        <div class="text-center mt-3">
+            <a href="{{ url_for('index') }}" class="btn btn-danger">Try again?</a>
+            <a href="{{ url_for('download_results', selected_shapefile=selected_shapefile) }}" class="btn btn-success">Download Results</a>
+        </div>
+    </div>
+</body>
+</html>
+
